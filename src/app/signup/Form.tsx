@@ -1,0 +1,62 @@
+import * as React from 'react';
+
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
+import Link from 'next/link';
+
+export function Form() {
+  return (
+    <Card className="w-[350px]">
+      <CardHeader>
+        <CardTitle>Sign Up </CardTitle>
+        <CardDescription></CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form>
+          <div className="grid w-full items-center gap-4">
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="email">Full Name</Label>
+              <Input id="email" placeholder="Brandon Garcia" />
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="email">Email</Label>
+              <Input id="email" placeholder="example@gmail.com" />
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="password">Password</Label>
+              <Input id="password" type="password" />
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="password">ReEnter-Password</Label>
+              <Input id="password" type="password" />
+            </div>
+          </div>
+        </form>
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <Link href="/login">
+          <Button variant="outline">Login</Button>
+        </Link>
+
+        <Button>Sign Up</Button>
+      </CardFooter>
+    </Card>
+  );
+}
