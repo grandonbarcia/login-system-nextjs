@@ -20,8 +20,27 @@ import {
 } from '@/components/ui/select';
 
 import Link from 'next/link';
+import { prisma } from '../../../prisma/client';
 
 export function Form() {
+  async function addUser(formData: FormData) {
+    'use server';
+    const content = {
+      email: formData.get('email'),
+      firstName: formData.get('fName'),
+      lastName: formData.get('lName'),
+      password: formData.get('password'),
+    };
+    await prisma.user.create({
+      data: {
+        email: formData.get('email') as string,
+        firstName: formData.get('fName') as string,
+        lastName: formData.get('lName') as string,
+        password: formData.get('password') as string,
+      },
+    });
+  }
+
   return (
     <Card className="w-[350px]">
       <CardHeader>
@@ -29,33 +48,36 @@ export function Form() {
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
+        <form action={addUser}>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="email">Full Name</Label>
-              <Input id="email" placeholder="Brandon Garcia" />
+              <Label htmlFor="name">First Name</Label>
+              <Input id="fName" name="fName" placeholder="Brandon Garcia" />
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="name">Last Name</Label>
+              <Input id="lName" name="lName" placeholder="Brandon Garcia" />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" placeholder="example@gmail.com" />
+              <Input id="email" name="email" placeholder="example@gmail.com" />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" />
+              <Input id="password" name="password" type="password" />
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="password">ReEnter-Password</Label>
-              <Input id="password" type="password" />
+              <Label htmlFor="re-password">ReEnter-Password</Label>
+              <Input id="re-password" name="re-password" type="password" />
             </div>
           </div>
+          <Button type={'submit'}>Sign Up</Button>
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
         <Link href="/login">
           <Button variant="outline">Login</Button>
         </Link>
-
-        <Button>Sign Up</Button>
       </CardFooter>
     </Card>
   );
